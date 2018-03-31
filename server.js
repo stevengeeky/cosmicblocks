@@ -41,7 +41,7 @@ var http = require('http');
 var path = require('path');
 var fs = require('fs'); // this enables reading files I guess.
 var app = express();
-const CREDENTIALS = require('./credentials.js');
+const CONFIG = require('./config.js');
 var https_options = {
 	// I have to pass these when I create the https server. currently I manually update them.
 	key: fs.readFileSync('ssl/key.pem'),
@@ -103,8 +103,8 @@ var handleDBResult = function(err, User, db) {
 
 	// i think the secret and the key can just be whatever, as long as they match between the app and io.
 	app.use(expressSession({
-		secret: CREDENTIALS.sessionSecret, 
-		key: CREDENTIALS.sessionKey, 
+		secret: CONFIG.sessionSecret, 
+		key: CONFIG.sessionKey, 
 		store: sessionStore,
 		resave: false, 
 		saveUninitialized: false,
@@ -121,15 +121,15 @@ var handleDBResult = function(err, User, db) {
 	var io = require('socket.io')(server);
 	io.use(passportSocketIo.authorize({
 	  cookieParser: cookieParser, 
-	  key: CREDENTIALS.sessionKey, 
-	  secret: CREDENTIALS.sessionSecret, 
+	  key: CONFIG.sessionKey, 
+	  secret: CONFIG.sessionSecret, 
 	  store: sessionStore 
 	}));
 
 	passport.use('twitter', new TwitterStrategy({
 			// this key/secret is from the Twitter App page that has Cosmic Blocks.
-			consumerKey: CREDENTIALS.twitterConsumerKey,
-			consumerSecret: CREDENTIALS.twitterConsumerSecret,
+			consumerKey: CONFIG.twitterConsumerKey,
+			consumerSecret: CONFIG.twitterConsumerSecret,
 			callbackURL: "https://cuddle.zone:" + port + "/login/twitter/callback"
 		}, 
 		function(token, tokenSecret, profile, done) {
@@ -1416,7 +1416,7 @@ var handleDBResult = function(err, User, db) {
 		function h2d(h) { return parseInt(h, 16); } // convert a hex value to decimal 
 		weight = (typeof(weight) !== 'undefined') ? weight : 50; // set the weight to 50%, if that argument is omitted
 		var color = "#";
-		for(var i = 0; i <= 5; i += 2) { // loop through each of the 3 hex pairs—red, green, and blue
+		for(var i = 0; i <= 5; i += 2) { // loop through each of the 3 hex pairsï¿½red, green, and blue
 			var v1 = h2d(color_1.substr(i, 2)), // extract the current pairs
 				v2 = h2d(color_2.substr(i, 2)),
 				// combine the current pairs from each source color, according to the specified weight
@@ -3007,7 +3007,7 @@ function connectToDB(callback) {
 	// time to connect to the database:
 	var User = undefined;
 	var orm = require("orm");
-	var db = orm.connect(CREDENTIALS.database, function (err, _db) {
+	var db = orm.connect(CONFIG.database, function (err, _db) {
 		if (err) {
 			return callback(err);
 		}

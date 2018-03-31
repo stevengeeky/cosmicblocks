@@ -1,0 +1,33 @@
+{
+  "name": "cosmicblocks",
+  "version": "1.0.0",
+  "description": "Narcissa's Cosmic Blocks Game",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/therewillbefun/cosmicblocks.git"
+  },
+  "keywords": [
+    "cosmic",
+    "blocks",
+    "narcissa",
+    "wright"
+  ],
+  "author": "Narcissa Wright",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/therewillbefun/cosmicblocks/issues"
+  },
+  "homepage": "https://github.com/therewillbefun/cosmicblocks#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.3",
+    "hsl-to-hex": "^1.0.0",
+    "node-minify": "^2.4.2",
+    "node-sass": "^4.8.3"
+  }
+}
